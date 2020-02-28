@@ -40,4 +40,17 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+data = FOREACH u GENERATE birthday as birthday;
 
+data0 = FOREACH data GENERATE birthday as c1, 
+SUBSTRING(birthday,8,10) as c2, (int) SUBSTRING(birthday,8,10) as c3, ToString(ToDate(birthday),'E') as c4, ToString(ToDate(birthday),'E') as c5;
+
+get_up = FOREACH data0 GENERATE c1, c2, c3, REPLACE(c4, 'Mon', 'lun') AS c4, REPLACE(c5, 'Mon', 'lunes') AS c5;
+get_up = FOREACH get_up GENERATE c1, c2, c3, REPLACE(c4, 'Tue', 'mar') AS c4, REPLACE(c5, 'Tue', 'martes') AS c5;
+get_up = FOREACH get_up GENERATE c1, c2, c3, REPLACE(c4, 'Wed', 'mie') AS c4, REPLACE(c5, 'Wed', 'miercoles') AS c5;
+get_up = FOREACH get_up GENERATE c1, c2, c3, REPLACE(c4, 'Thu', 'jue') AS c4, REPLACE(c5, 'Thu', 'jueves') AS c5;
+get_up = FOREACH get_up GENERATE c1, c2, c3, REPLACE(c4, 'Fri', 'vie') AS c4, REPLACE(c5, 'Fri', 'viernes') AS c5;
+get_up = FOREACH get_up GENERATE c1, c2, c3, REPLACE(c4, 'Sat', 'sab') AS c4, REPLACE(c5, 'Sat', 'sabado') AS c5;
+get_up = FOREACH get_up GENERATE c1, c2, c3, REPLACE(c4, 'Sun', 'dom') AS c4, REPLACE(c5, 'Sun', 'domingo') AS c5;
+
+STORE get_up INTO './output' using PigStorage(',');

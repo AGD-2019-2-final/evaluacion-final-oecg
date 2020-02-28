@@ -27,5 +27,16 @@
 -- 
 fs -rm -f -r output;
 --
+data = LOAD 'data.csv' USING PigStorage(',') 
+    AS (id:INT, 
+        nombre:CHARARRAY,
+        apellido:CHARARRAY,
+        fecha:CHARARRAY,
+        color:CHARARRAY,
+        numero: int
+        );
+DUMP data;
 
+to_merge = foreach data generate CONCAT(nombre,'@',apellido);
 
+store to_merge into 'output' USING PigStorage(' ');

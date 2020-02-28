@@ -40,3 +40,24 @@ u = LOAD 'data.csv' USING PigStorage(',')
 --
 -- >>> Escriba su respuesta a partir de este punto <<<
 --
+data = FOREACH u GENERATE birthday as birthday;
+
+data0 = FOREACH data GENERATE birthday as c1, 
+SUBSTRING(birthday,5,7) as c2,
+SUBSTRING(birthday,5,7) as c3,
+SUBSTRING(birthday,5,7) as c4;
+
+get_up = FOREACH data0 GENERATE c1, c2, REPLACE(c3, '01', 'ene') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, c2, REPLACE(c3, '02', 'feb') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, c2, REPLACE(c3, '03', 'mar') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, c2, REPLACE(c3, '04', 'abr') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, c2, REPLACE(c3, '05', 'may') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, c2, REPLACE(c3, '06', 'jun') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, c2, REPLACE(c3, '07', 'jul') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, c2, REPLACE(c3, '08', 'ago') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, c2, REPLACE(c3, '09', 'sep') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, c2, REPLACE(c3, '10', 'oct') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, c2, REPLACE(c3, '11', 'nov') AS c3, c4;
+get_up = FOREACH get_up GENERATE c1, REPLACE(c3, '12', 'dic') AS c3, c2, (int) c4;
+
+STORE get_up INTO './output' using PigStorage(',');

@@ -1,5 +1,10 @@
+#! /usr/bin/env python
 import sys
-#
-#  >>> Escriba el codigo del mapper a partir de este punto <<<
-#
+if __name__ == "__main__":
 
+    for line in sys.stdin:
+        letter = line.split(' ')[0]
+        count = line.split(' ')[6]
+        count = float(count)
+        
+        sys.stdout.write("{}\t{}\n".format(letter, count))
